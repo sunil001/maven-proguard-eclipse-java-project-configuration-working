@@ -7,7 +7,7 @@
 	<groupId>com.gt</groupId>
 	<artifactId>maven-proguard-test</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>-ver.01</version>
 	<name>maven-proguard-test-application</name>
 
 	<properties>
@@ -24,6 +24,7 @@
 				<artifactId>proguard-maven-plugin</artifactId>
 				<version>2.0.4</version>
 
+				<!-- run proguard at package phase -->
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -32,6 +33,7 @@
 						</goals>
 					</execution>
 				</executions>
+
 				<configuration>
 					<obfuscate>true</obfuscate>
 					<archive>
@@ -65,6 +67,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<!-- making jar file -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -76,6 +79,8 @@
 					</archive>
 				</configuration>
 			</plugin>
+			<!-- maven dependency plugin to copy all dependency jar to a folder, here 
+				copying to target/lib -->
 			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
