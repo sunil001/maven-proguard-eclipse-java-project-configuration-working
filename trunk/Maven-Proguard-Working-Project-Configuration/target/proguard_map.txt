@@ -1,0 +1,5 @@
+com.gt.App -> com.gt.App:
+    void main(java.lang.String[]) -> main
+    void show() -> show
+com.gt.Calculation -> com.gt.a:
+    java.lang.String multiply(int,int) -> a
