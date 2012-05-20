@@ -1,0 +1,113 @@
+<!-- @Author- Ganesh Tiwari (gtiwari333@gmail.com) -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<!-- Project configs -->
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.gt</groupId>
+	<artifactId>maven-proguard-test</artifactId>
+	<packaging>jar</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>maven-proguard-test-application</name>
+
+	<properties>
+		<project.build.mainClass>com.gt.App</project.build.mainClass>
+	</properties>
+
+	<!-- Build Configs -->
+	<build>
+
+		<plugins>
+			<!-- Proguard configs -->
+			<plugin>
+				<groupId>com.pyx4me</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+				<version>2.0.4</version>
+
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>proguard</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<obfuscate>true</obfuscate>
+					<archive>
+						<manifest>
+							<mainClass>${project.build.mainClass}</mainClass>
+						</manifest>
+					</archive>
+					<options>
+						<option>-allowaccessmodification</option>
+						<option>-dontshrink</option>
+						<option>-keepattributes *Annotation*</option>
+						<option>-keep public class ${project.build.mainClass} { *; }</option>
+						<!-- <option>-keep public class [com.qualified_name]</option> -->
+
+						<!-- if you want to keep enum classes, this is generally expected -->
+						<option>-keep public enum * { *;}</option>
+					</options>
+					<outjar>${project.build.finalName}.jar</outjar>
+					<libs>
+						<lib>${java.home}/lib/rt.jar</lib>
+						<lib>${java.home}/lib/jsse.jar</lib>
+						<lib>${java.home}/lib/jce.jar</lib>
+					</libs>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>net.sf.proguard</groupId>
+						<artifactId>proguard</artifactId>
+						<version>4.4</version>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>${project.build.mainClass}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- Dependencies Section -->
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.toedter</groupId>
+			<artifactId>jcalendar</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<!-- Add other dependencies here -->
+
+	</dependencies>
+</project>
